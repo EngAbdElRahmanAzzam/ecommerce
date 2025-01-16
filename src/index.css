@@ -1,0 +1,28 @@
+:root{
+  --main-color:rgb(255, 255, 255);
+  --second-color:#2dd4bf;
+  --hover-color:gray
+}
+
+::selection{
+  color: var(--second-color);
+  background-color: rgb(214, 211, 211);
+}
+
+/* scrollbar */
+::-webkit-scrollbar{
+  width: 10px;
+}
+::-webkit-scrollbar-track{
+  background-color: var(--main-color);
+  border-left: 1px solid black;
+}
+::-webkit-scrollbar-thumb{
+  background-color: var(--second-color);
+  transition: all 1s linear;
+  border-radius: 5px;
+  cursor: url(./assets/icons/rope.png), pointer;
+}
+::-webkit-scrollbar-thumb:hover{
+  background-color: var(--hover-color);
+}

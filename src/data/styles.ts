@@ -1,5 +1,5 @@
 export const commonLayotLight = {
-    mainColor:"teal",
+    mainColor:"teal.400",
     secondColor:"gray", 
     colorSchemBtn:"teal"
 }

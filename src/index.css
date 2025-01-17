@@ -26,3 +26,7 @@
 ::-webkit-scrollbar-thumb:hover{
   background-color: var(--hover-color);
 }
+
+.active{
+  color: red;
+}

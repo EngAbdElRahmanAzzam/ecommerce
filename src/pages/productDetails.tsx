@@ -25,7 +25,7 @@ const ProductDetailPage = () => {
   const [product, setProduct] = useState()
 
   useEffect(
-    () => {axiosInstance.get(`/products/${productId}?populate=thumbnail`).then((res)=>setProduct(res.data.data))}
+    () => { setProduct(getProductById(productId)) }
     ,[])
     console.log(productId, product)
   return (

@@ -11,28 +11,43 @@ import {
     MenuItem,
     MenuDivider,
     useDisclosure,
-    useColorModeValue,
     Stack,
     Divider,
-    Center
+    Center,
+    Image
   } from '@chakra-ui/react'
-  import { useColorMode } from '@chakra-ui/react'
-  import CloseIcon from '@/assets/icons/closeIcon'
-  import HamburgerIcon from '@/assets/icons/hamborgIcon'
-  import MoonIcon from '@/assets/icons/moonIcon'
-  import SunIcon from '@/assets/icons/sunIcon'
+
+import { useColorMode } from '@chakra-ui/react'
+import CloseIcon from '@/assets/icons/closeIcon'
+import HamburgerIcon from '@/assets/icons/hamborgIcon'
+import MoonIcon from '@/assets/icons/moonIcon'
+import SunIcon from '@/assets/icons/sunIcon'
 import { NavLink } from 'react-router-dom'
+import useThemeColors from '@/hooks/themes'
+import {ReactNode} from 'react'
   
-  
-  const Links = ['Home', 'Products', 'Team']
-    
-  export default function NotFound() {
+const Links = ['Home', 'Products', 'Team']
+interface INav{
+  color:string;
+  to:string;
+  children:ReactNode
+}
+const Nav = ({to,color,children}:INav)=>{
+  return (
+  <Button as={NavLink} to={to} color={color} fontSize={'sm'} fontWeight={400} variant={'link'}>
+    {children}
+  </Button>
+  )
+}  
+const Navbar = () => {
+    const isAuth = localStorage.getItem('user')
     const { colorMode, toggleColorMode } = useColorMode()
     const { isOpen, onOpen, onClose } = useDisclosure()
-  
+    const [mainColor, secondColor , colorSchemBtn] = useThemeColors()
+
     return (
       <>
-        <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+        <Box bg={"white"} px="5">
           <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
             <IconButton
               size={'md'}
@@ -42,10 +57,10 @@ import { NavLink } from 'react-router-dom'
               onClick={isOpen ? onClose : onOpen}
             />
             <HStack spacing={8} alignItems={'center'}>
-              <Box>Logo</Box>
+              <Image src="/logo.png" w="200px"/>
               <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
                 {Links.map((link) => (
-                  <NavLink key={link} to={"/"+link}>{link}</NavLink>
+                  <Nav key={link} color={mainColor} to={`/${link}`}>{link}</Nav>
                 ))}
               </HStack>
             </HStack>
@@ -56,42 +71,64 @@ import { NavLink } from 'react-router-dom'
                   {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
                 </Button>
   
+                {isAuth?(
                 <Menu>
-  
-                  <MenuButton
-                    as={Button}
-                    rounded={'full'}
-                    variant={'link'}
-                    cursor={'pointer'}
-                    minW={0}>
-                    <Avatar
-                      size={'sm'}
-                      src={'https://avatars.dicebear.com/api/male/username.svg'}
-                    />
-                  </MenuButton>
-  
-                  <MenuList alignItems={'center'}>
-                    <br />
-                    <Center>
+                    <MenuButton
+                      as={Button}
+                      rounded={'full'}
+                      variant={'link'}
+                      cursor={'pointer'}
+                      minW={0}>
                       <Avatar
-                        size={'2xl'}
+                        size={'sm'}
                         src={'https://avatars.dicebear.com/api/male/username.svg'}
                       />
-                    </Center>
-                    <br />
-                    <Center>
-                      <p>Username</p>
-                    </Center>
-                    <br />
-                    <MenuDivider />
-                    <MenuItem>Profile</MenuItem>
-                    <MenuItem>Wishlist</MenuItem>
-                    <MenuItem>Cart</MenuItem>
-                    <Divider />
-                    <MenuItem>Logout</MenuItem>
-                  </MenuList>
-  
-                </Menu>
+
+                    </MenuButton>
+                    <MenuList alignItems={'center'}>
+                      <br />
+                      <Center>
+                        <Avatar
+                          size={'2xl'}
+                          src={'https://avatars.dicebear.com/api/male/username.svg'}
+                        />
+                      </Center>
+                      <br />
+                      <Center>
+                        <p>Username</p>
+                      </Center>
+                      <br />
+                      <MenuDivider />
+                      <MenuItem>Profile</MenuItem>
+                      <MenuItem>Wishlist</MenuItem>
+                      <MenuItem>Cart</MenuItem>
+                      <Divider />
+                      <MenuItem>Logout</MenuItem>
+                    </MenuList>
+                 
+                </Menu>):
+                (
+                  <Flex align="center" gap="3">
+                      <Button as={NavLink} to="/signin" color={mainColor} fontSize={'sm'} fontWeight={400} variant={'link'}>
+                        Sign In
+                      </Button>
+                      <Button
+                        as={NavLink}
+                        to="/signup"
+                        display={{ base: 'none', md: 'inline-flex' }}
+                        fontSize={'sm'}
+                        fontWeight={600}
+                        color={"white"}
+                        bg={mainColor}
+                        _hover={{
+                          bg: 'white',
+                          color:mainColor
+                        }}>
+                        Sign Up
+          </Button>
+                  </Flex>
+                )}
+
               </Stack>
             </Flex>
           </Flex>
@@ -110,3 +147,5 @@ import { NavLink } from 'react-router-dom'
       </>
     )
   }
+
+  export default Navbar

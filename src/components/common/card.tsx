@@ -1,8 +1,7 @@
-import { commonLayotDark, commonLayotLight } from "@/data/styles"
 import { IProduct } from "@/interfaces/models"
 import {Button, Card, Image, Text , CardBody , CardFooter , Stack  , Heading , Divider } from "@chakra-ui/react"
 import { Link } from "react-router-dom"
-import { useColorMode } from "@chakra-ui/react";
+import useThemeColors from "@/hooks/themes";
 
 interface IProps{
     product:IProduct
@@ -11,21 +10,7 @@ interface IProps{
 const ProductCard = ({product}:IProps) =>
 {
     const serverDomin = import.meta.env.VITE_DOMAIN_HOST
-    let mainColor:string =""
-    let secondColor:string =""
-    let colorSchemBtn:string =""
-    let {colorMode} = useColorMode()
-    if(colorMode === "dark")
-    {
-        mainColor=commonLayotDark.mainColor
-        secondColor=commonLayotDark.secondColor
-        colorSchemBtn=commonLayotLight.colorSchemBtn
-    }
-    else{
-        mainColor=commonLayotLight.mainColor
-        secondColor=commonLayotLight.secondColor
-        colorSchemBtn=commonLayotLight.colorSchemBtn
-    }
+    const [mainColor, secondColor , colorSchemBtn] = useThemeColors()
 
     return (
             <Card boxShadow="lg">

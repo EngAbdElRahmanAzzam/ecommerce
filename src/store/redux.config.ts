@@ -1,10 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import loginSlice from './features/login'
-
+import cartSlice from './features/cart' 
 
 export const store = configureStore({
     reducer:{
-        login:loginSlice
+        login:loginSlice,
+        cart:cartSlice
     },
     middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

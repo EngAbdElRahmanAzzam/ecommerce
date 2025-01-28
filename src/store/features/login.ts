@@ -4,7 +4,6 @@ import {createSlice} from '@reduxjs/toolkit'
 import { IUserLogin } from '@/interfaces/user'
 import { rootState } from '../redux.config'
 import {createStandaloneToast} from "@chakra-ui/react"
-import { useNavigate } from 'react-router-dom'
 import cookieApi from '@/utilits/cookieApi'
 
 interface ILoginSlice{
@@ -56,6 +55,7 @@ const loginSlice = createSlice({
               })
             state.data = payload.payload
             cookieApi.set("jwt", payload.payload.jwt)
+            location.replace('/')
         })
         .addCase(loginService.rejected, (state, payload) => {
             toast({

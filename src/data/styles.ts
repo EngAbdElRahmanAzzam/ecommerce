@@ -11,5 +11,5 @@ export const commonLayotDark = {
 }
 
 export const commonIconStyles = {
-    width:"20px"
+    width: 20
 }

@@ -6,6 +6,7 @@ import ProductPage from "@/pages/products";
 import RootLayout from "@/layouts/rootLayout";
 import ProductDetailPage from "@/pages/productDetails";
 import SignupPage from "@/pages/signupPage";
+import TeamPage from "@/pages/team";
 
 
 const router = createBrowserRouter(
@@ -17,6 +18,7 @@ const router = createBrowserRouter(
             <Route index element=<HomePage/> />
             <Route path="/products" element=<ProductPage/> />
             <Route path="/products/:productId" element=<ProductDetailPage/> />
+            <Route path="/team" element=<TeamPage/> />
             <Route path="/signin" element=<SigninPage/> />
             <Route path="/signup" element=<SignupPage/> />
         </Route>

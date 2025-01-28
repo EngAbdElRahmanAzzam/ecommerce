@@ -3,18 +3,22 @@ import './App.css'
 import router from './router/router.config'
 import { ChakraProvider } from '@chakra-ui/react'
 import { QueryClient , QueryClientProvider} from '@tanstack/react-query'
+import { Provider } from 'react-redux'
+import { store } from './store/redux.config'
+
 
 const App = () => {
   const queryClient = new QueryClient()
 
   return (
     <>
-      <ChakraProvider>
+      <Provider store={store}>
         <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router}/>
-          <h2>haloo</h2>
+          <ChakraProvider>
+            <RouterProvider router={router}/>
+          </ChakraProvider>
         </QueryClientProvider>
-      </ChakraProvider>
+      </Provider>
     </>
   )
 }

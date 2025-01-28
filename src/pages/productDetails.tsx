@@ -17,7 +17,6 @@ import {
   ListItem,
 } from '@chakra-ui/react'
 import {useEffect , useState} from 'react'
-import { MdLocalShipping } from 'react-icons/md'
 import { useParams  } from 'react-router-dom'
 
 const ProductDetailPage = () => {
@@ -181,7 +180,6 @@ const ProductDetailPage = () => {
           </Button>
 
           <Stack direction="row" alignItems="center" justifyContent={'center'}>
-            <MdLocalShipping />
             <Text>2-3 business days delivery</Text>
           </Stack>
         </Stack>

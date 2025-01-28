@@ -24,7 +24,8 @@ import MoonIcon from '@/assets/icons/moonIcon'
 import SunIcon from '@/assets/icons/sunIcon'
 import { NavLink } from 'react-router-dom'
 import useThemeColors from '@/hooks/themes'
-import {ReactNode} from 'react'
+import {ReactNode, useState} from 'react'
+import cookieApi from '@/utilits/cookieApi'
   
 const Links = ['Home', 'Products', 'Team']
 interface INav{
@@ -33,17 +34,23 @@ interface INav{
   children:ReactNode
 }
 const Nav = ({to,color,children}:INav)=>{
-  return (
-  <Button as={NavLink} to={to} color={color} fontSize={'sm'} fontWeight={400} variant={'link'}>
-    {children}
-  </Button>
-  )
+    return (
+    <Button as={NavLink} to={to} color={color} fontSize={'sm'} fontWeight={400} variant={'link'}>
+      {children}
+    </Button>
+    )
 }  
 const Navbar = () => {
-    const isAuth = localStorage.getItem('user')
+    const [isAuth , updateIsAuth] = useState(cookieApi.get("jwt"))
     const { colorMode, toggleColorMode } = useColorMode()
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const [mainColor, secondColor , colorSchemBtn] = useThemeColors()
+    const [mainColor,] = useThemeColors()
+
+    //handlers
+    const logout = () => {
+        cookieApi.remove('jwt')
+        updateIsAuth(false)
+    }
 
     return (
       <>
@@ -103,7 +110,7 @@ const Navbar = () => {
                       <MenuItem>Wishlist</MenuItem>
                       <MenuItem>Cart</MenuItem>
                       <Divider />
-                      <MenuItem>Logout</MenuItem>
+                      <MenuItem onClick={() => logout()}>Logout</MenuItem>
                     </MenuList>
                  
                 </Menu>):

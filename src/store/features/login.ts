@@ -4,6 +4,8 @@ import {createSlice} from '@reduxjs/toolkit'
 import { IUserLogin } from '@/interfaces/user'
 import { rootState } from '../redux.config'
 import {createStandaloneToast} from "@chakra-ui/react"
+import { useNavigate } from 'react-router-dom'
+import cookieApi from '@/utilits/cookieApi'
 
 interface ILoginSlice{
     loader:boolean
@@ -16,6 +18,8 @@ const initialState:ILoginSlice ={
     data:null,
     error:null,
 } 
+
+const {toast} = createStandaloneToast()
 
 export const loginService = createAsyncThunk<
 any, 
@@ -41,17 +45,27 @@ const loginSlice = createSlice({
         builder
         .addCase(loginService.pending, (state) => {state.loader = true})
         .addCase(loginService.fulfilled, (state, payload) => {
-            toaster.create({
-                description: "File saved successfully",
-                type: "loading",
-              })
             state.loader = false
+            toast({
+                title:"Login successfully",
+                description: "Wellcome to Matgark",
+                status: "success",
+                isClosable:true,
+                duration:3000,
+                position:'bottom-right'
+              })
             state.data = payload.payload
+            cookieApi.set("jwt", payload.payload.jwt)
         })
         .addCase(loginService.rejected, (state, payload) => {
-            createStandaloneToast({
-                
-            })
+            toast({
+                title:"Error",
+                description: `${payload.payload.response.data.error.message as string}`,
+                status: "error",
+                isClosable:true,
+                duration:3000,
+                position:'bottom-right'
+              })
             state.loader = false
             state.error = payload.payload
         })
